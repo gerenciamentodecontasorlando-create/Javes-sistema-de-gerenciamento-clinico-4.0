@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BTX Docs Saúde — Agenda + Prontuário (Offline)</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#19e28c">
+  <link rel="icon" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <header class="topbar no-print">
+    <div class="brand">
+      <div class="logo">B</div>
+      <div>
+        <h1>BTX Docs Saúde — Agenda + Prontuário</h1>
+        <p>Offline real • Memória forte • Semana inteira • Registro clínico por paciente</p>
+      </div>
+    </div>
+
+    <div class="rightinfo">
+      <div id="topInfo">Carregando…</div>
+      <div class="small" id="pwaStatus">PWA: verificando…</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="shell">
+      <section class="screen">
+        <div class="layout">
+
+          <!-- LATERAL -->
+          <aside class="card no-print">
+            <h2>Profissional</h2>
+            <p class="small">
+              Esses dados entram em todos os documentos e no cabeçalho do prontuário.
+              Salva no dispositivo (IndexedDB).
+            </p>
+
+            <label for="profNome">Nome completo</label>
+            <input id="profNome" placeholder="Ex.: Dr(a). Orlando..." />
+
+            <label for="profEsp">Especialidade</label>
+            <input id="profEsp" placeholder="Ex.: Cirurgião-dentista / Médico" />
+
+            <div class="row">
+              <div>
+                <label for="profConselho">Conselho</label>
+                <input id="profConselho" placeholder="CRO / CRM / CREFITO..." />
+              </div>
+              <div>
+                <label for="profReg">Registro</label>
+                <input id="profReg" placeholder="00000" />
+              </div>
+            </div>
+
+            <label for="profEnd">Endereço</label>
+            <input id="profEnd" placeholder="Rua, nº, bairro, cidade - UF" />
+
+            <div class="row">
+              <div>
+                <label for="profTel">Telefone</label>
+                <input id="profTel" placeholder="(00) 00000-0000" />
+              </div>
+              <div>
+                <label for="profEmail">E-mail</label>
+                <input id="profEmail" placeholder="seuemail@dominio.com" />
+              </div>
+            </div>
+
+            <div class="actions" style="justify-content:flex-start; margin-top:12px;">
+              <button class="btn btn-ghost" type="button" id="btnLimparProf">Limpar</button>
+              <button class="btn btn-primary" type="button" id="btnSalvarProf">Salvar</button>
+            </div>
+
+            <hr style="border:none;border-top:1px solid var(--border); margin:14px 0;" />
+
+            <h2>Navegação</h2>
+            <div class="tabs">
+              <button class="tabbtn active" data-tab="agenda">
+                Agenda <span class="badge">dia/semana</span>
+              </button>
+              <button class="tabbtn" data-tab="pacientes">
+                Pacientes <span class="badge">cadastro</span>
+              </button>
+              <button class="tabbtn" data-tab="prontuario">
+                Prontuário <span class="badge">registros</span>
+              </button>
+              <button class="tabbtn" data-tab="backup">
+                Backup <span class="badge">exportar</span>
+              </button>
+            </div>
+
+            <hr style="border:none;border-top:1px solid var(--border); margin:14px 0;" />
+
+            <div class="row" style="margin-top:10px;">
+              <button class="btn btn-ghost" id="btnInstall" type="button" style="display:none;">Instalar App</button>
+              <button class="btn btn-danger" id="btnResetAll" type="button">Zerar tudo</button>
+            </div>
+
+            <p class="small" style="margin-top:12px;">
+              Dica: use a agenda semanal e clique em “Atender” para registrar o procedimento do dia no prontuário.
+            </p>
+          </aside>
+
+          <!-- CONTEÚDO -->
+          <section class="content">
+            <div class="content-header">
+              <div>
+                <h3 id="docTitle">Agenda</h3>
+                <div class="sub" id="docSub">Dia e semana, com memória forte (offline).</div>
+              </div>
+              <div class="small">
+                Profissional: <span id="profResumo">—</span>
+              </div>
+            </div>
+
+            <div class="split">
+              <!-- FORM -->
+              <div class="panel no-print" id="formPanel"></div>
+
+              <!-- PREVIEW -->
+              <div class="panel">
+                <div class="actions no-print">
+                  <button class="btn btn-ghost" type="button" id="btnLimparForm">Limpar</button>
+                  <button class="btn btn-primary" type="button" id="btnPrint">Imprimir / PDF</button>
+                </div>
+
+                <div class="paper" id="paper">
+                  <div class="doc-header">
+                    <div>
+                      <h1 id="pvTitle">Pré-visualização</h1>
+                      <p id="pvSub">Preencha para gerar o documento.</p>
+                    </div>
+                    <div class="doc-meta" id="pvMeta"></div>
+                  </div>
+
+                  <div id="pvBody"></div>
+                  <div class="sign" id="pvSign"></div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="./db.js"></script>
+  <script src="./app.js"></script>
+  <script src="./pwa.js"></script>
+</body>
+</html>
